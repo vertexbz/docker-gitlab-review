@@ -1,0 +1,7 @@
+#!/bin/sh
+
+TARGET_IP=`netstat -rn | grep UG | sed "s/ \+/ /g" | cut -d ' ' -f 2`
+
+sed -E "s/TARGET_IP/\1${TARGET_IP}:81/g" /etc/haproxy.tmpl >  /etc/haproxy.cfg
+
+exec $@

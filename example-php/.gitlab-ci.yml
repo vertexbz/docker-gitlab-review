@@ -1,0 +1,43 @@
+stages:
+  - Test
+  - Review
+
+Dummy Test:
+    stage: Test
+    image: alpine:3.4
+    script:
+      - "true"
+
+.review_template_job: &review_template
+    stage: Review
+    variables:
+        URL: '$CI_ENVIRONMENT_SLUG.$CI_PROJECT_NAME.dev'
+    environment: &review_template_env
+        name: review/$CI_COMMIT_REF_NAME
+        url: http://$CI_ENVIRONMENT_SLUG.$CI_PROJECT_NAME.dev
+    tags:
+        - app-manager
+
+.review_template_start_job: &review_template_start
+    <<: *review_template
+    environment:
+        <<: *review_template_env
+        on_stop: Stop Review
+    script:
+        - app-start
+
+.review_template_stop_job: &review_template_stop
+    <<: *review_template
+    environment:
+        <<: *review_template_env
+        action: stop
+    when: manual
+    script:
+        - app-stop
+
+Start Review:
+    <<: *review_template_start
+    when: manual
+
+Stop Review:
+    <<: *review_template_stop

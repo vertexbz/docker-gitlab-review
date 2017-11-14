@@ -1,0 +1,11 @@
+#!/bin/sh
+
+rm -f /etc/haproxy.cfg /var/run/haproxy.pid
+
+if [ "x$PORT" == "x" ]; then
+    PORT=80
+fi
+
+sed -i -E "s/(bind\s+:).*/\1${PORT}/" /etc/docker-gen/haproxy.tmpl
+
+exec $@

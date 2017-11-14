@@ -1,0 +1,13 @@
+user=root
+no-hosts
+port=53
+strict-order
+no-negcache
+resolv-file=/etc/resolv.dnsmasq
+
+{{range $host, $containers := groupByMulti $ "Env.VHOST" ","}}
+{{$container := index $containers 0}}
+{{$network := index $container.Networks 0}}
+host-record={{$host}},{{$network.IP}}
+{{end}}
+

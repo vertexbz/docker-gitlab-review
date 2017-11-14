@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ "x$DNS_IP" == "x" ]; then
+    DNS_IP="{{\$network.IP}}"
+fi
+
+if [ "$DNS_IP" == "self" ]; then
+    DNS_IP=`grep $HOSTNAME /etc/hosts | cut -f1`
+fi
+
+sed -i -E "s/^(host-record=.+,).*/\1${DNS_IP}/" /etc/docker-gen/dnsmasq.tmpl
+
+rm -f /etc/resolv.dnsmasq
+
+if [ "x${FALLBACK_DNS}" == "x" ]; then
+    ln -s /etc/resolv.conf /etc/resolv.dnsmasq
+else
+    touch /etc/resolv.dnsmasq
+    DNS=$(echo ${FALLBACK_DNS} | tr "," "\n")
+    for server in ${DNS}; do
+        echo "nameserver ${server}" >> /etc/resolv.dnsmasq
+    done
+fi
+
+/usr/sbin/dnsmasq
+
+
+exec $@
+

@@ -1,0 +1,76 @@
+version: '3'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    environment:
+      VHOST: gitlab.dev
+    hostname: gitlab.dev
+    volumes:
+      - ./gitlab-config:/etc/gitlab
+      - ./gitlab-data:/var/opt/gitlab
+    logging:
+      driver: none
+    networks:
+      default:
+      static-ip:
+        ipv4_address: 10.223.223.2
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    volumes:
+      - ./runner-config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+    links:
+      - gitlab:gitlab-ci
+    extra_hosts:
+      - "gitlab.dev:10.223.223.2"
+    logging:
+      driver: none
+    networks:
+      default:
+      static-ip:
+        ipv4_address: 10.223.223.4
+
+  proxy:
+    build: proxy/
+    environment:
+# uncoment the line below for osx
+##      PORT: 81
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    network_mode: host
+    logging:
+      driver: none
+
+  dns: # for more information refer to dns/README.md
+    build: dns/
+    environment:
+      DNS_IP: "127.0.0.1"
+      FALLBACK_DNS: "8.8.8.8,8.8.4.4"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+# uncoment line below for osx
+##      - "53:53/udp"
+    logging:
+      driver: none
+    networks:
+      default:
+      static-ip:
+        ipv4_address: 10.223.223.3
+
+# uncoment section below for osx
+##  osx-proxy:
+##    build: osx-proxy/
+##    ports:
+##      - "80:80"
+##    logging:
+##      driver: none
+
+# create network to always know ip addresses
+networks:
+  static-ip:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.223.223.0/8

@@ -1,0 +1,22 @@
+global
+        user root
+        group root
+        maxconn 1024
+        pidfile /var/run/haproxy.pid
+
+defaults
+        balance roundrobin
+        mode http
+        option forwardfor except 127.0.0.1
+        option  redispatch
+        option  http-server-close
+        timeout client 5s
+        timeout connect 60s
+        timeout server 5s
+
+frontend http
+        bind :80
+        use_backend http_default
+
+backend http_default
+        server TARGET_IP TARGET_IP

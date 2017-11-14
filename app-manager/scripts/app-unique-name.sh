@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "${CI_COMMIT_REF_SLUG}_${CI_PROJECT_NAME}_${CI_PROJECT_NAMESPACE}"

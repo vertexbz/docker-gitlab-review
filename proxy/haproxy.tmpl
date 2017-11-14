@@ -1,0 +1,45 @@
+global
+        user root
+        group root
+        maxconn 1024
+        pidfile /var/run/haproxy.pid
+
+defaults
+        balance roundrobin
+        mode http
+        option forwardfor except 127.0.0.1
+        option  redispatch
+        option  http-server-close
+        timeout client 5s
+        timeout connect 60s
+        timeout server 5s
+
+frontend http
+        bind :80
+{{range $host, $containers := groupByMulti $ "Env.VHOST" ","}}
+        {{range $path, $value := groupByMulti $containers "Env.VPATH" ","}}
+        use_backend http_{{$host}}{{replace $path "/" "_" -1}} if { hdr_dom(host) -i {{$host}} } { path_beg {{$path}}  }
+        {{end}}
+        {{with $container := whereNotExist $containers "Env.VPATH"}}
+        use_backend http_{{$host}} if { hdr_dom(host) -i {{$host}} }
+        {{end}}
+{{end}}
+
+{{range $host, $containers := groupByMulti $ "Env.VHOST" ","}}
+{{range $path, $group := groupByMulti $containers "Env.VPATH" ","}}
+backend http_{{$host}}{{replace $path "/" "_" -1}}
+        {{range $index, $container := $group}}
+        {{with $network := index $container.Networks 0}}
+        server {{$network.IP}} {{$network.IP}}:80
+        {{end}}
+        {{end}}
+{{end}}
+{{with $group := whereNotExist $containers "Env.VPATH"}}
+backend http_{{$host}}
+        {{range $index, $container := $group}}
+        {{with $network := index $container.Networks 0}}
+        server {{$network.IP}} {{$network.IP}}:80
+        {{end}}
+        {{end}}
+{{end}}
+{{end}}

@@ -1,0 +1,7 @@
+version: '2'
+services:
+    web:
+        build: .
+        command: php -S 0.0.0.0:80 /app/public/index.php
+        environment:
+            VHOST: ${URL}

@@ -1,0 +1,8 @@
+/runner-config/
+!/runner-config/.gitkeep
+/gitlab-config/
+!/gitlab-config/.gitkeep
+/gitlab-data/
+!/gitlab-data/.gitkeep
+/example-php/.git
+!/example-php/
