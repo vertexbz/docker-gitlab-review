@@ -50,7 +50,7 @@ docker-compose exec gitlab-runner gitlab-ci-multi-runner register \
                      --docker-pull-policy "if-not-present"
 ```
 
-- Set following to `runner-config/config.toml` in section `[runners.docker]` of `gitlab-review-app-manager` (be carefull, there can be duplicates - in this case you have to merge configs by yout self)
+- Set following to `runner-config/config.toml` in section `[runners.docker]` of `gitlab-review-app-manager` (be carefull, there can be duplicates - in this case you have to merge configs by your self)
 ```
     privileged = true
     volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
