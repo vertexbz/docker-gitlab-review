@@ -1,7 +1,5 @@
 # GitLab review apps via Docker
 
-### `!!` Before running on OSX look at comments in `docker-compose.yml`
-
 
 ## Deploy proof of concept environment
 
@@ -13,6 +11,8 @@ sh start.sh
 
 
 ### Manual setup
+
+#### `!!` Before running on OSX look at comments in `docker-compose.yml`
 
 - Build app-manager
 ```
