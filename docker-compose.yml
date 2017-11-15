@@ -33,8 +33,8 @@ services:
 
   proxy:
     build: proxy/
-    environment:
 # uncoment the line below for osx
+##    environment:
 ##      PORT: 81
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -49,8 +49,9 @@ services:
       FALLBACK_DNS: "8.8.8.8,8.8.4.4"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    ports:
+
 # uncoment line below for osx
+##    ports:
 ##      - "53:53/udp"
     logging:
       driver: none

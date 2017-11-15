@@ -46,15 +46,17 @@ docker-compose exec gitlab-runner gitlab-ci-multi-runner register \
                      --docker-image "app-manager" \
                      --docker-privileged true \
                      --docker-volumes "/var/run/docker.sock:/var/run/docker.sock" \
-                     --docker-extra-hosts "gitlab.dev:10.223.223.2" \
-                     --docker-pull-policy "if-not-present"
+                     --docker-extra-hosts "gitlab.dev:127.0.0.1" \
+                     --docker-pull-policy "if-not-present" \
+                     --docker-network-mode "host"
 ```
 
 - Set following to `runner-config/config.toml` in section `[runners.docker]` of `gitlab-review-app-manager` (be carefull, there can be duplicates - in this case you have to merge configs by your self)
 ```
     privileged = true
     volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
-    extra_hosts = ["gitlab.dev:10.223.223.2"]
+    extra_hosts = ["gitlab.dev:127.0.0.1"]
+    network_mode= "host"
     pull_policy = "if-not-present"
 ```
 

@@ -91,8 +91,9 @@ docker-compose exec gitlab-runner gitlab-ci-multi-runner register \
                      --docker-image "app-manager" \
                      --docker-privileged true \
                      --docker-volumes "/var/run/docker.sock:/var/run/docker.sock" \
-                     --docker-extra-hosts "gitlab.dev:10.223.223.2" \
-                     --docker-pull-policy "if-not-present"
+                     --docker-extra-hosts "gitlab.dev:127.0.0.1" \
+                     --docker-pull-policy "if-not-present" \
+                     --docker-network-mode "host"
 
 if [ $? -ne 0 ]; then
     perror "ERROR! Couldn't register CI runner!"
@@ -119,7 +120,8 @@ check_interval = 0
     privileged = true
     disable_cache = false
     volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
-    extra_hosts = ["gitlab.dev:10.223.223.2"]
+    extra_hosts = ["gitlab.dev:127.0.0.1"]
+    network_mode= "host"
     pull_policy = "if-not-present"
     shm_size = 0
   [runners.cache]
