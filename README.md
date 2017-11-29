@@ -28,7 +28,7 @@ docker-compose up -d
 
 - Configure DNS
     - **macOS**: add `127.0.0.1` to dns servers, on top of list  (System Preferences -> Network -> Advanced -> DNS)
-    - **Linux**: add `172.31.244.3` to top of `resolv.conf` or to dnsmasq configuration (for dnsmasq consider also **strict-order** and **no-negcache** options)
+    - **Linux**: add `172.31.33.3` to top of `resolv.conf` or to dnsmasq configuration (for dnsmasq consider also **strict-order** and **no-negcache** options)
 
 - GitLab address is http://gitlab.dev-local
 

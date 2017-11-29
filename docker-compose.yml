@@ -13,7 +13,7 @@ services:
     networks:
       default:
       static-ip:
-        ipv4_address: 172.31.244.2
+        ipv4_address: 172.31.33.2
 
   gitlab-runner:
     image: gitlab/gitlab-runner:alpine
@@ -23,19 +23,19 @@ services:
     links:
       - gitlab:gitlab-ci
     extra_hosts:
-      - "gitlab.dev-local:172.31.244.2"
+      - "gitlab.dev-local:172.31.33.2"
     logging:
       driver: none
     networks:
       default:
       static-ip:
-        ipv4_address: 172.31.244.4
+        ipv4_address: 172.31.33.4
 
   proxy:
     build: proxy/
 # uncoment the line below for osx
-##    environment:
-##      PORT: 81
+    environment:
+      PORT: 81
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     network_mode: host
@@ -51,22 +51,22 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
 # uncoment line below for osx
-##    ports:
-##      - "53:53/udp"
+    ports:
+      - "53:53/udp"
     logging:
       driver: none
     networks:
       default:
       static-ip:
-        ipv4_address: 172.31.244.3
+        ipv4_address: 172.31.33.3
 
 # uncoment section below for osx
-##  osx-proxy:
-##    build: osx-proxy/
-##    ports:
-##      - "80:80"
-##    logging:
-##      driver: none
+  osx-proxy:
+    build: osx-proxy/
+    ports:
+      - "80:80"
+    logging:
+      driver: none
 
 # create network to always know ip addresses
 networks:
@@ -74,4 +74,4 @@ networks:
     driver: bridge
     ipam:
      config:
-       - subnet: 172.31.244.0/8
+       - subnet: 172.31.33.0/24
