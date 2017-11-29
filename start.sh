@@ -67,7 +67,7 @@ fi
 if $IS_MAC_OS; then
     pinstruct "Please add 127.0.0.1 to dns servers, on top of list (System Preferences -> Network -> Advanced -> DNS)."
 else
-    pinstruct "Please add 10.223.223.3 to top of resolv.conf or to dnsmasq configuration (for dnsmasq consider also strict-order and no-negcache options)."
+    pinstruct "Please add 172.31.244.3 to top of resolv.conf or to dnsmasq configuration (for dnsmasq consider also strict-order and no-negcache options)."
 fi
 
 pprompt "Hit enter when it's done..."

@@ -13,7 +13,7 @@ services:
     networks:
       default:
       static-ip:
-        ipv4_address: 10.223.223.2
+        ipv4_address: 172.31.244.2
 
   gitlab-runner:
     image: gitlab/gitlab-runner:alpine
@@ -23,13 +23,13 @@ services:
     links:
       - gitlab:gitlab-ci
     extra_hosts:
-      - "gitlab.dev:10.223.223.2"
+      - "gitlab.dev:172.31.244.2"
     logging:
       driver: none
     networks:
       default:
       static-ip:
-        ipv4_address: 10.223.223.4
+        ipv4_address: 172.31.244.4
 
   proxy:
     build: proxy/
@@ -58,7 +58,7 @@ services:
     networks:
       default:
       static-ip:
-        ipv4_address: 10.223.223.3
+        ipv4_address: 172.31.244.3
 
 # uncoment section below for osx
 ##  osx-proxy:
@@ -74,4 +74,4 @@ networks:
     driver: bridge
     ipam:
      config:
-       - subnet: 10.223.223.0/8
+       - subnet: 172.31.244.0/8
