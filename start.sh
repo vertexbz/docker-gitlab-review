@@ -73,8 +73,8 @@ fi
 pprompt "Hit enter when it's done..."
 read
 
-pinfo "GitLab address is http://gitlab.dev (first start takes a few minutes)."
-pinstruct "Login and navigate to http://gitlab.dev/admin/runners for global runner registration token."
+pinfo "GitLab address is http://gitlab.dev-local (first start takes a few minutes)."
+pinstruct "Login and navigate to http://gitlab.dev-local/admin/runners for global runner registration token."
 
 # register app-manager runner
 pinfo "Register app-manager runner..."
@@ -91,7 +91,7 @@ docker-compose exec gitlab-runner gitlab-ci-multi-runner register \
                      --docker-image "app-manager" \
                      --docker-privileged true \
                      --docker-volumes "/var/run/docker.sock:/var/run/docker.sock" \
-                     --docker-extra-hosts "gitlab.dev:127.0.0.1" \
+                     --docker-extra-hosts "gitlab.dev-local:127.0.0.1" \
                      --docker-pull-policy "if-not-present" \
                      --docker-network-mode "host"
 
@@ -120,7 +120,7 @@ check_interval = 0
     privileged = true
     disable_cache = false
     volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
-    extra_hosts = ["gitlab.dev:127.0.0.1"]
+    extra_hosts = ["gitlab.dev-local:127.0.0.1"]
     network_mode= "host"
     pull_policy = "if-not-present"
     shm_size = 0

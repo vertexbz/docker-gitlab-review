@@ -3,8 +3,8 @@ services:
   gitlab:
     image: gitlab/gitlab-ce:latest
     environment:
-      VHOST: gitlab.dev
-    hostname: gitlab.dev
+      VHOST: gitlab.dev-local
+    hostname: gitlab.dev-local
     volumes:
       - ./gitlab-config:/etc/gitlab
       - ./gitlab-data:/var/opt/gitlab
@@ -23,7 +23,7 @@ services:
     links:
       - gitlab:gitlab-ci
     extra_hosts:
-      - "gitlab.dev:172.31.244.2"
+      - "gitlab.dev-local:172.31.244.2"
     logging:
       driver: none
     networks:

@@ -30,9 +30,9 @@ docker-compose up -d
     - **macOS**: add `127.0.0.1` to dns servers, on top of list  (System Preferences -> Network -> Advanced -> DNS)
     - **Linux**: add `172.31.244.3` to top of `resolv.conf` or to dnsmasq configuration (for dnsmasq consider also **strict-order** and **no-negcache** options)
 
-- GitLab address is http://gitlab.dev
+- GitLab address is http://gitlab.dev-local
 
-- Log in and navigate to http://gitlab.dev/admin/runners for global runner registration token
+- Log in and navigate to http://gitlab.dev-local/admin/runners for global runner registration token
 
 - Register runner (replace `REGISTRATION_TOKEN` with valid ci token)
 ```
@@ -46,7 +46,7 @@ docker-compose exec gitlab-runner gitlab-ci-multi-runner register \
                      --docker-image "app-manager" \
                      --docker-privileged true \
                      --docker-volumes "/var/run/docker.sock:/var/run/docker.sock" \
-                     --docker-extra-hosts "gitlab.dev:127.0.0.1" \
+                     --docker-extra-hosts "gitlab.dev-local:127.0.0.1" \
                      --docker-pull-policy "if-not-present" \
                      --docker-network-mode "host"
 ```
@@ -55,7 +55,7 @@ docker-compose exec gitlab-runner gitlab-ci-multi-runner register \
 ```
     privileged = true
     volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
-    extra_hosts = ["gitlab.dev:127.0.0.1"]
+    extra_hosts = ["gitlab.dev-local:127.0.0.1"]
     network_mode= "host"
     pull_policy = "if-not-present"
 ```

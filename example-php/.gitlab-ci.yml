@@ -11,10 +11,10 @@ Dummy Test:
 .review_template_job: &review_template
     stage: Review
     variables:
-        URL: '$CI_ENVIRONMENT_SLUG.$CI_PROJECT_NAME.dev'
+        URL: '$CI_ENVIRONMENT_SLUG.$CI_PROJECT_NAME.dev-local'
     environment: &review_template_env
         name: review/$CI_COMMIT_REF_NAME
-        url: http://$CI_ENVIRONMENT_SLUG.$CI_PROJECT_NAME.dev
+        url: http://$CI_ENVIRONMENT_SLUG.$CI_PROJECT_NAME.dev-local
     tags:
         - app-manager
 
