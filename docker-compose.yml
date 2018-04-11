@@ -34,8 +34,8 @@ services:
   proxy:
     build: proxy/
 # uncoment the line below for osx
-    environment:
-      PORT: 81
+#    environment:
+#      PORT: 81
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     network_mode: host
@@ -51,8 +51,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
 # uncoment line below for osx
-    ports:
-      - "53:53/udp"
+#    ports:
+#      - "53:53/udp"
     logging:
       driver: none
     networks:
@@ -61,12 +61,12 @@ services:
         ipv4_address: 172.31.33.3
 
 # uncoment section below for osx
-  osx-proxy:
-    build: osx-proxy/
-    ports:
-      - "80:80"
-    logging:
-      driver: none
+#  osx-proxy:
+#    build: osx-proxy/
+#    ports:
+#      - "80:80"
+#    logging:
+#      driver: none
 
 # create network to always know ip addresses
 networks:
